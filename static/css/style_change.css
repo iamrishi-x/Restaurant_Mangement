@@ -1,0 +1,204 @@
+
+#sidebar {
+    min-width         : 270px;
+    max-width         : 270px;
+    color             : #fff;
+    -webkit-transition: all 0.3s;
+    -o-transition     : all 0.3s;
+    transition        : all 0.3s;
+    position          : relative;
+    z-index           : 0;
+  }
+  
+  #sidebar:after {
+    position  : absolute;
+    top       : 0;
+    left      : 0;
+    right     : 0;
+    bottom    : 0;
+    content   : '';
+    background: #2f89fc;
+    background: -moz-linear-gradient(45deg, #2f89fc 0%, #ff5db1 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, #2f89fc), color-stop(100%, #ff5db1));
+    background: -webkit-linear-gradient(45deg, #2f89fc 0%, #ff5db1 100%);
+    background: -o-linear-gradient(45deg, #2f89fc 0%, #ff5db1 100%);
+    background: -ms-linear-gradient(45deg, #2f89fc 0%, #ff5db1 100%);
+    background: linear-gradient(45deg, #2f89fc 0%, #ff5db1 100%);
+    filter    : progid:DXImageTransform.Microsoft.gradient(startColorstr='#2f89fc', endColorstr='#ff5db1', GradientType=1);
+    opacity   : .8;
+    z-index   : -1;
+  }
+  
+  #sidebar .h6 {
+    color: #fff;
+  }
+  
+  #sidebar.active {
+    margin-left: -270px;
+  }
+  
+  #sidebar h1 {
+    margin-bottom: 20px;
+    font-weight  : 700;
+    font-size    : 30px;
+  }
+  
+  #sidebar h1 .logo {
+    color: #fff;
+  }
+  
+  #sidebar h1 .logo span {
+    font-size: 13px;
+    color    : #fff;
+    display  : block;
+  }
+  
+  #sidebar ul.components {
+    padding: 0;
+  }
+  
+  #sidebar ul li {
+    font-size: 16px;
+  }
+  
+  #sidebar ul li>ul {
+    margin-left: 10px;
+  }
+  
+  #sidebar ul li>ul li {
+    font-size: 14px;
+  }
+  
+  #sidebar ul li a {
+    padding      : 10px 0;
+    display      : block;
+    color        : rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  #sidebar ul li a span {
+    color: #fff;
+  }
+  
+  #sidebar ul li a:hover {
+    color: #fff;
+  }
+  
+  #sidebar ul li.active>a {
+    background: transparent;
+    color     : #fff;
+  }
+  
+  @media (max-width: 991.98px) {
+    #sidebar {
+      min-width: 180px;
+      max-width: 180px;
+    }
+  }
+  
+  #sidebar .custom-menu {
+    display           : inline-block;
+    position          : absolute;
+    top               : 20px;
+    right             : 0;
+    margin-right      : -20px;
+    -webkit-transition: 0.3s;
+    -o-transition     : 0.3s;
+    transition        : 0.3s;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    #sidebar .custom-menu {
+      -webkit-transition: none;
+      -o-transition     : none;
+      transition        : none;
+    }
+  }
+  
+  #sidebar .custom-menu .btn {
+    width        : 60px;
+    height       : 60px;
+    border-radius: 50%;
+    position     : relative;
+  }
+  
+  #sidebar .custom-menu .btn i {
+    margin-right: -40px;
+    font-size   : 14px;
+  }
+  
+  #sidebar .custom-menu .btn.btn-primary {
+    background  : transparent;
+    border-color: transparent;
+  }
+  
+  #sidebar .custom-menu .btn.btn-primary:after {
+    z-index          : -1;
+    position         : absolute;
+    top              : 0;
+    left             : 0;
+    right            : 0;
+    bottom           : 0;
+    content          : '';
+    -webkit-transform: rotate(45deg);
+    -ms-transform    : rotate(45deg);
+    transform        : rotate(45deg);
+    background       : #30e3ca;
+    border-radius    : 10px;
+  }
+  
+  #sidebar .custom-menu .btn.btn-primary:hover,
+  #sidebar .custom-menu .btn.btn-primary:focus {
+    background  : transparent !important;
+    border-color: transparent !important;
+  }
+  
+  a[data-toggle="collapse"] {
+    position: relative;
+  }
+  
+  .dropdown-toggle::after {
+    display          : block;
+    position         : absolute;
+    top              : 50%;
+    right            : 0;
+    -webkit-transform: translateY(-50%);
+    -ms-transform    : translateY(-50%);
+    transform        : translateY(-50%);
+  }
+
+  .img-fluid {
+    max-width: 100%;
+    height   : auto;
+  }
+  
+  .d-flex {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+  
+
+  .align-items-stretch {
+    -webkit-box-align: stretch !important;
+    -ms-flex-align   : stretch !important;
+    align-items      : stretch !important;
+  }
+
+  .p-4 {
+    padding: 1.5rem !important;
+  }
+  
+  .list-unstyled {
+    padding-left: 0;
+    list-style  : none;
+  }
+
+  #sidebar ul.components {
+    padding: 0;
+  }
+
+  .subscribe-form .form-control {
+    background: rgba(255, 255, 255, 0.2);
+  }
+

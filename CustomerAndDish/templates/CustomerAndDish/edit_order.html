@@ -1,0 +1,191 @@
+{% extends 'layout.html' %} {% load widget_tweaks %} {% block title %} Add
+Orders {% endblock %} {% block body %}
+<section>
+	<div class="section-body">
+		<div class="row">
+			<!-- BEGIN  - FORM -->
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-head style-primary" >
+						<header>Add Order</header>
+						<div class="tools">
+							<a class="btn btn-icon-toggle btn-collapse"><i class="fa fa-angle-down"></i></a>
+							<a class="btn btn-icon-toggle btn-close"><i class="md md-close"></i></a>
+						</div>
+					</div>
+					<div class="card-body" >
+						<form class="form" role="form" action="/OrderAndDish/new_order/" method="post">
+							{% csrf_token %}
+							<div class="row">
+								<div class="col-sm-6" style="margin-top: 12px;">
+									<header>Customer Info</header>
+									<div class="form-group floating-label" >	
+
+										<input type="text" name="Custname" class="form-control" />
+										<!-- {{ form.name | add_class:'form-control' }} -->
+										<label for="regular2">Customer Name</label>
+									</div>
+									<div class="form-group floating-label" style="margin-top: 39px;">
+										<input type="text" name="CustPhone" class="form-control" value="314632273" />
+										<!-- {{ form.phone | add_class:'form-control' }} -->
+										<label for="regular2">Phone Number</label>
+									</div>
+									<div class="form-group floating-label">
+										<textarea class="form-control" rows="2" name="CustAddress">malegoan camp Dist-Nasik</textarea>
+										<!-- {{ form.address | add_class:'form-control' | attr:'rows:2'}} -->
+										<label for="textarea2">Address</label>
+									</div>
+								</div>
+								<div class="col-sm-6" style="margin-top: 24px;">
+									<!-- <header>Order Info</header> -->
+									<div class="form-group" style="margin-top: 12px;">
+										<input type="date" class="form-control" id="CustOrderDate" name="CustOrderDate">
+										<!-- {{ form.date | add_class:'form-control' | attr:'type:date'}} -->
+										<label for="regular2">Date</label>
+									</div>
+
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="form-group floating-label" style="margin-top: 20px;">
+												<select class="form-control selectpicker custom-select" data-style="btn-light" name="Custpayment_option">
+													<option selected value="Prepay (Full)">Prepay (Full)</option>
+													<option value="Prepay (Half)">Prepay (Half)	</option>
+													<option value="Postpay">Postpay</option>
+												</select>
+												<!-- {{ form.payment_option| add_class:'form-control' }} -->
+												<label for="select2">Payment Options</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12" style="margin-top: 22px;">
+											<!-- <hr /> -->
+											<label class="radio-inline radio-styled col-sm-2">
+												Order Status
+											</label>
+											<div class="col-md-10 form-control">
+												<div class="row">
+													<div class="col-md-3">
+														<label class="radio-inline radio-styled">
+																	<input class="form-control form-check-input" type="radio" name="Orderstate" id="inlineRadio1" value="Waiting" checked="checked">
+																<label class="form-check-label" for="inlineRadio1">Waiting</label>
+														</label>
+													</div>
+
+													<div class="col-md-3">
+														<label class="radio-inline radio-styled">
+																<input class="form-check-input" type="radio" name="Orderstate" id="inlineRadio2" value="Delivered">
+																<label class="form-check-label" for="inlineRadio2">Delivered</label>
+														</label>
+													</div>
+													<div class="col-md-3">
+															<label class="radio-inline radio-styled">
+																<!-- <input class="form-check-input" type="radio" name="Orderstate" id="inlineRadio4" value="Ready"> -->
+																 <input class="form-check-input" type="radio" name="Orderstate" id="inlineRadio3" value="Paid">
+																	<label class="form-check-label" for="inlineRadio3">Paid</label>
+															</label>
+													</div>
+													<div class="col-md-3">
+															<label class="radio-inline radio-styled">
+																<!-- <input class="form-check-input" type="radio" name="Orderstate" id="inlineRadio4" value="Ready"> -->
+																 <input class="form-check-input" type="radio" name="Orderstate" id="inlineRadio4" value="Not Paid">
+																	<label class="form-check-label" for="inlineRadio4">Not Paid</label>
+															</label>
+													</div>
+												</div>
+											</div>
+										</div>
+								</div>
+								<!-- Ordering Comes Here -->
+									<hr>
+									<div class="container" >
+										<div class="col-lg-12">
+
+										<div class="row" style="margin-top: 40px;">
+										<table id="myTable" class="table order-list">
+											<thead>
+												<tr>
+													<td>Dish</td>
+													<td>Cost</td>
+													<td>Quantity</td>
+													<td>SubTotal</td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="col-sm-3">
+														<input type="text" name="Dish[]" class="form-control" readonly="readonly" />
+
+													</td>
+													<td class="col-sm-2">
+															<!-- <h4 type="text" id="Cost" name="Cost" class="form-control" >0</h4> -->
+														<input type="text" name="Cost[]" id="Cost" class="form-control"  readonly="readonly"/>
+													</td>
+													<td class="col-sm-2">
+														<input type="text" name="Quantity[]" class="form-control"  readonly="readonly"/>
+													</td>
+
+													<td class="col-sm-3">
+														<input type="text" class="form-control" id="rowPrice" name="rowPrice[]" readonly="readonly"/>
+													</td>
+													<!-- deleteRow -->
+													<td class="col-sm-1">
+														<input type="button" class="deleteRow ibtnDel btn btn-md btn-danger"  value="Delete">
+													</td>
+
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td class="col-sm-3">
+															<!-- <label class="mdb-main-label">Select Dish</label> -->
+															<!-- multiple data-max-options="3" -->
+															<select class="selectpicker" data-style="btn-info" data-live-search="true" id="main_dish" name="main_dish">
+																<option disabled selected>Select Dish</option>
+																{% for dish in Dishes %}
+																<option>{{ dish.dish_name }}</option>
+																{% endfor %}
+															</select>
+
+													</td>
+													<td  class="col-sm-3">
+															<!-- <label class="mdb-main-label">Select Quantity</label> -->
+															<input type="text" class="form-control" id="main_quantity" name="main_quantity" placeholder="Quantity"/>
+													</td>
+													<td class="col-sm-2">
+
+															<input type="button" class="btn btn-lg btn-block"
+															id="addrow" value="Add Dish" />
+													</td>
+													<td  class="col-sm-4">
+															<h4 type="text" class="form-control" id="grandtotal">Total : 0</h4>
+													</td>
+												</tr>
+												<tr></tr>
+											</tfoot>
+										</table>
+									</div></div>
+								</div>
+
+								<div class="col-md-12">
+									<hr />
+									<div class="card-actionbar-row">
+										<input type="submit" class="btn btn-flat btn-primary ink-reaction"
+											value="Place Order" />
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!--end .card-body -->
+				</div>
+				<!--end .card -->
+			</div>
+			<!--end .col -->
+			<!-- END FORM - TIME ON SITE -->
+		</div>
+		<!--end .row -->
+	</div>
+	<!--end .section-body -->
+</section>
+
+{% endblock %}

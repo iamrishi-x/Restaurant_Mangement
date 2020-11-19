@@ -1,0 +1,360 @@
+{% extends 'layout.html' %}
+
+{% block title %} Index Table {% endblock %}
+
+{% block body %}
+
+<style>
+    tables {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 16px;
+        padding: 10px;
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .tab-content .active,
+    .pill-content .active {
+        background-color: rgb(255, 255, 255);
+    }
+
+    .nav-tabs.nav-justified>.active>a,
+    .nav-tabs.nav-justified>.active>a:hover,
+    .nav-tabs.nav-justified>.active>a:focus {
+        border: none;
+        color: rgb(51, 50, 50);
+        border-bottom: 2px solid rgb(212, 245, 255);
+        background-color: rgb(212, 245, 255);
+        /* background-image:  linear-gradient(to bottom, 
+                    rgba(255,255,255, 0), 
+                    rgba(255,255,255, 1) 90%); */
+    }
+
+    .btn.btn-light.px-1 {
+        margin: 0px;
+        padding: 14px;
+        height: 170px;
+        width: 152px;
+        font-size: 12px;
+        text-transform: none;
+        background-color: rgb(255, 255, 255);
+    }
+
+    .btn.btn-light.px-1:hover {
+        /* z-index  : 2; */
+        background-image: radial-gradient(farthest-corner at 60% 55%,rgb(196, 248, 255),rgb(255, 255, 255));
+                
+        /* background-color: rgb(204, 255, 181);  */
+    }
+</style>
+
+<div class="container-fluid bg-light mt-2" style="background-color: rgb(255, 255, 255)">
+    <div class="row">
+        <!-- Left side Customer info Orders table -->
+        <div class="col-sm-5" style="background-color: rgb(255, 255, 255)">
+            <div class="card" style="margin-top: 10px;">
+                <div class="card-head style-light">
+                    <header>Customers</header>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="datatable" class="table order-column hover">
+                            <thead>
+                                <tr>
+                                    <!-- <th width="5%">Id</th> -->
+                                    <th width="100px">Name</th>
+                                    <th width="100px">Time In</th>
+                                    <th width="100px">Bill</th>
+                                    <th width="70px">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in table_info %}
+                                <tr class="gradeX">
+                                    <!-- <td>{{ i.cust_id }}</td> -->
+                                    <td>{{ i.cust_id.name }}</td>
+                                    <td>{{ i.cust_id.time_in }}</td>
+                                    <td>{{ i.cust_id.order_total }}</td>
+                                    {% if i.cust_id.order_status == 'Waiting' %}
+                                    <td><span class="badge"
+                                            style="background: #ffeb3a">{{ i.cust_id.order_status }}</span>
+                                    </td>
+                                    {% elif i.cust_id.order_status == 'Delivered' %}
+                                    <td><span class="badge" style="background: #00fff2">
+                                            {{ i.cust_id.order_status }}</span>
+                                    </td>
+                                    {% elif i.cust_id.order_status == 'Paid' %}
+                                    <td><span class="badge" style="background: #7bff00">
+                                            {{ i.cust_id.order_status }}</span>
+                                    </td>
+                                    {% elif i.cust_id.order_status == 'Not Paid' %}
+                                    <td><span class="badge" style="background: #ff0202">
+                                            {{ i.cust_id.order_status }}</span>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <!--end .table-responsive -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Side Table Layout start here -->
+        <div class="col-sm-7" style="background-color: rgb(255, 255, 255)">
+            <div class="card" style="margin-top: 10px;">
+                <div class="card-head style-light">
+                    <header>Tables</header>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs nav-justified" role="tablist" id="tabl">
+                        {% for i in all_roomTables %}
+                        <li role="presentation" class=""><a href="#{{i.room_n}}" aria-controls="{{i.room_n}}" role="tab"
+                                class="nav-link" data-toggle="tab" id="T{{ forloop.counter }}">
+                                {{i.room_name}}</a></li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="tab-content" id="tabc"  style="border: 4px solid rgb(212, 245, 255);"   >
+                        {% for i in all_roomTables %}
+                        <div role="tabpanel" class="tab-pane" id="{{i.room_n}}">
+                            <tables>
+                                {% with ''|center:i.room_tables as range %}
+                                {% for j in range %}
+                                <form action="#" id="f{{ i.room_n }}.{{ forloop.counter }}">
+                                    <button class="btn btn-light px-1" data-toggle="modal" data-target="#newCustModal"
+                                        data-table_id="{{ i.room_n }}.{{ forloop.counter }}"
+                                        id="b{{ i.room_n }}.{{ forloop.counter }}">
+                                        <div class="card shadow mt-2 mx-2"
+                                            id="color{{ i.room_n }}.{{ forloop.counter }}"
+                                            style="width: 12rem; height: 14rem;">
+                                            <div class="card-body pt-3" id="c{{ i.room_n }}.{{ forloop.counter }}"
+                                                style="margin: -20px;">
+                                                <h6 class="card-title text-dark" style="color: #0050c7b0">Table
+                                                    {{forloop.counter}}:{{i}}<br><br><sup
+                                                        id="n{{ i.room_n }}.{{ forloop.counter }}"
+                                                        style="color: black"></sup>
+                                                </h6>
+                                                <h6 class="card-subtitle mb-3"
+                                                    id="r{{ i.room_n }}.{{ forloop.counter }}">0 &#8377</h6>
+                                                <h6 class="card-subtitle mb-2"
+                                                    id="p{{ i.room_n }}.{{ forloop.counter }}">0 <i class="fa fa-user"
+                                                        aria-hidden="true"></i> </h6>
+                                                <p class="card-text" id="m{{ i.room_n }}.{{ forloop.counter }}">0 <i
+                                                        class="fa fa-clock-o" aria-hidden="true"></i></p>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </form>
+                                {% endfor %}
+                                {% endwith %}
+                            </tables>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Rightest side small 2 buttons panel -->
+        <!-- <div class="col-sm-1" style="background-color: rgb(255, 255, 255)">
+            <div class="card card-block h-100" style="margin-top: 30px;">
+                <button class="btn btn-danger">Take Away</button>
+                <button class="btn btn-warning">Delivery</button>
+            </div>
+        </div> -->
+    </div>
+
+    <!-- Most bottom table -->
+    <div class="row">
+        <table class="table" id="openTable">
+            <thead>
+                <tr>
+                    <th>Room</th>
+                    <th>Table</th>
+                    <th>Table_n</th>
+                    <th>Peple</th>
+                    <th>In Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in table_info %}
+                <tr>
+                    <td>{{i.table_room}}</td>
+                    <td>{{i.table_no}}</td>
+                    <td>{{i.table_n}}</td>
+                    <td>{{i.cust_id.no_of_people}}</td>
+                    <td>{{i.in_time}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Model For New Customer Input -->
+<div class="modal fade" id="newCustModal" aria-labelledby="newCustModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-primary">
+                <h5 class="modal-title text-light" id="exampleModalLabel">New Customer Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" id="modalForm" action="">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6" style="margin-top: 12px;">
+                            <!-- <header>Customer Info</header> -->
+                            <div class="form-group floating-label">
+
+                                <input type="text" name="Custname" class="form-control" value="-" />
+
+                                <label for="regular2">Customer Name</label>
+                            </div>
+                            <div class="form-group floating-label" style="margin-top: 12px;">
+                                <input type="text" name="CustPhone" class="form-control" value="+91 8484924525" />
+
+                                <label for="regular2">Phone Number</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6" style="margin-top: 12px;">
+                            <!-- <header>Order Info</header> -->
+                            <div class="form-group" style="margin-top: 0px;">
+                                <input type="date" class="form-control" id="CustorderDate" name="CustorderDate">
+                                <label for="regular2">Date</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group floating-label" style="margin-top: 0px;">
+                                        <select class="form-control selectpicker custom-select" data-style="btn-light"
+                                            name="Custpayment_option">
+                                            <option value="Prepay (Full)">Prepay (Full)</option>
+                                            <option value="Prepay (Half)">Prepay (Half) </option>
+                                            <option selected value="Postpay">Postpay</option>
+                                        </select>
+                                        <label for="select2">Payment Options</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6" style="margin-top: 12px;">
+                            <div class="form-group floating-label" style="margin-top: 0px;">
+                                <select class="form-control selectpicker custom-select" data-style="btn-light"
+                                    name="CustOrder_type">
+                                    <option selected value="DineIn">DineIn</option>
+                                    <option value="TakeAway">Take Away</option>
+                                </select>
+
+                                <label for="select2">Order Type</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6" style="margin-top: 12px;">
+                            <div class="form-group floating-label" style="margin-top: 0px;">
+                                <input type="text" name="CustTotalFamilyMember" class="form-control" value="1" />
+                                <label for="select2">Total Members</label>
+                                <input type="hidden" name="CustTable" id="CustTable" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group floating-label" style="margin: 15px;">
+                            <textarea class="form-control" rows="2"
+                                name="CustAddress">malegoan camp Dist-Nasik</textarea>
+                            <label for="textarea2">Address</label>
+                        </div>
+                    </div><!-- order Address div end -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning">Skip and Continue</button>
+                    <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log('SideBar Clicked')
+        // $('#sideBarButton').click();
+        // $('#SideBarClick').click();
+        // $("#dish_id").select2();
+        $("#T1").trigger('click');
+
+        $('#newCustModal').on('show.bs.modal', function (event) {
+            console.log('tablel click');
+            Date.prototype.toDateInputValue = (function () {
+                var local = new Date(this);
+                local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+                return local.toJSON().slice(0, 10);
+            });
+
+            var button = $(event.relatedTarget);
+            var tableNo = button.data('table_id');
+
+            var modal = $(this);
+            $("#modalForm")[0].reset();
+            // console.log(tableNo);
+            var today = new Date();
+            modal.find('.modal-title').text('New Customer Info (' + tableNo + ')');
+            modal.find('.modal-body #id_dc_table').val(tableNo);
+            modal.find("[name='Custname']").val(tableNo + '-T' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
+            modal.find("[name='CustTable']").val(tableNo);
+            modal.find("[name='CustorderDate']").val(new Date().toDateInputValue());
+        });
+
+        // Table Select Code
+        var endDate = new Date();
+        {% for i in table_info %}
+        document.getElementById("color{{ i.table_n }}").style.backgroundColor = "rgb(212, 245, 255)";
+        document.getElementById("p{{ i.table_n }}").innerHTML = '{{i.cust_id.no_of_people}}&nbsp<i class="fa fa-user" aria-hidden="true"></i>'
+        document.getElementById("r{{ i.table_n }}").innerHTML = '{{i.cust_id.order_total}}&nbsp&#8377';
+        document.getElementById("n{{ i.table_n }}").innerHTML = '{{i.cust_id.name}}';
+        var startDate = new Date("{{i.in_time | date:'d M Y G H: i: s e' }} ")
+        console.log(startDate)
+        
+        var min = (endDate.getTime() - startDate.getTime()) / 1000;
+        var min = Math.round(min / 60);
+        console.log(min)
+        document.getElementById("m{{ i.table_n }}").innerHTML = min + 'm&nbsp<i class="fa fa-clock-o" aria-hidden="true"></i>';
+
+        document.getElementById("f{{i.table_n}}").action = "{% url 'order_redirect' i.table_n %}";
+        document.getElementById("b{{i.table_n}}").dataset.target = "";
+        {% endfor %}
+        
+
+        // -------------------------------- Key Binding ----------------------------------
+        // ----------------------------------------------------------------------------------
+
+        setInterval(function () {
+            {% for i in table_info %}
+            var endDate = new Date();
+            var startDate = new Date("{{i.in_time | date:'d M Y G H: i: s e' }} ")
+            // startDate.setHours ( startDate.getHours() - 5 );
+            // startDate.setMinutes ( startDate.getMinutes() - 30 );
+            console.log(endDate)
+            var min = (endDate.getTime() - startDate.getTime()) / 1000;
+            var min = Math.round(min / 60);
+            console.log(min)
+            document.getElementById("m{{ i.table_n }}").innerHTML = min + 'm&nbsp<i class="fa fa-clock-o" aria-hidden="true"></i>';
+            {% endfor %}
+        }, 60000)
+    });
+</script>
+
+
+{% endblock %}

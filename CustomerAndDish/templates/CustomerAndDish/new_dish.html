@@ -1,0 +1,110 @@
+{% extends 'layout.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %} Add Dish {% endblock %}
+
+{% block body %}
+<section>
+	<div class="section-body">
+		<!-- BEGIN DATATABLE 2 -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-head style-primary">
+						<header>Add Dish</header>
+						<div class="tools">
+							<a class="btn btn-icon-toggle btn-collapse"><i class="fa fa-angle-down"></i></a>
+							<a class="btn btn-icon-toggle btn-close"><i class="md md-close"></i></a>
+						</div>
+					</div>
+					<div class="card-body">
+
+						<form class="form" role="form" action="" method="post"> {% csrf_token %}
+
+							<form>
+								<div class="form-row">
+									<div class="form-group">
+										<select class="selectpicker" data-style="btn-info" data-live-search="true"
+											id="new_Dish" name="new_Dish">
+											<option disabled selected>Select Dish</option>
+											{% for dish in Dishes %}
+											<option>{{ dish.dish_name_Def }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<div class="form-group floating-label">
+											<select class="form-control selectpicker custom-select"
+												data-style="btn-light" name="new_Category">
+												<option value="Vegetarian">Vegetarian</option>
+												<option value="NonVegetarian">Non Vegetarian</option>
+												<option selected value="None">None</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group col-md-6">
+										<div class="form-group floating-label">	
+											<input type="text" name="new_SubCategory" class="form-control"
+										value="None" />
+										</div>
+									</div>
+								</div>
+								<div class="form-row">
+									
+									<div class="form-group col-md-7">
+										<label class="radio-inline radio-styled col-sm-1">
+											<b>Active</b>
+										</label>
+										<div class="col-md-6">
+											<div class="row">
+												
+												<div class="col-md-3">
+													<label class="radio-inline radio-styled">
+														<input class="form-control form-check-input" type="radio"
+															name="new_Active" id="inlineRadio1" value="1"
+															checked="checked">
+														<label class="form-check-label" for="inlineRadio1">Available</label>
+													</label>
+												</div>
+		
+												<div class="col-md-3">
+													<label class="radio-inline radio-styled">
+														<input class="form-check-input" type="radio" name="new_Active"
+															id="inlineRadio2" value="0">
+														<label class="form-check-label" for="inlineRadio2">Not Available</label>
+													</label>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+									<div class="form-group col-md-2">
+										<div class="form-group floating-label">
+											<input type="text" name="new_DishPrice" class="form-control"
+										value="0" />
+										</div>
+									</div>
+								</div>
+								<button type="submit" class="btn btn-primary">Add Dish</button>
+							</form>
+
+
+						</form>
+					</div>
+					<!--end .card-body -->
+				</div>
+				<!--end .card -->
+			</div>
+			<!--end .col -->
+			<!-- END FORM - TIME ON SITE -->
+
+		</div>
+		<!--end .row -->
+	</div>
+	<!--end .section-body -->
+</section>
+
+{% endblock %}

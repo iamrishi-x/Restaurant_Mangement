@@ -1,0 +1,309 @@
+<!-- js - orderDynamic.js
+
+	Book Mark (For toggle Ctrl+Shift+1/2/3)
+Ctrl+1  Left side Column Cust Info and Dish
+Ctrl+2  For Customer Input only
+Ctrl+3  Dish input info bottom  
+Ctrl+4  Right Side For Dish Info Disply Start HERE
+
+-->
+
+{% extends 'layout.html' %} {% load widget_tweaks %} {% block title %} Add
+Orders {% endblock %}
+{% block body %}
+
+<style>
+	/* ------------- For Select Dish -------------*/
+	.bootstrap-select>.dropdown-toggle.bs-placeholder.btn-info {
+		background-color: #4BB543;
+		border: 2px solid #4BB543;
+		/* color: rgb(231, 0, 0); */
+		color: rgb(255, 255, 255);
+		width: 230px;
+		text-align: center;
+		border-radius: 4px;
+
+	}
+
+	.btn-info:hover,
+	.btn-info:focus,
+	.btn-info.focus,
+	.btn-info:active,
+	.btn-info.active,
+	.open>.dropdown-toggle.btn-info {
+		color: rgb(255, 255, 255);
+		background-color: #4BB543;
+		border-color: #4BB543;
+		border-radius: 4px;
+	}
+
+	.bootstrap-select>.dropdown-toggle {
+		background-color: #4BB543;
+		border: 2px solid#4BB543;
+		color: rgb(255, 255, 255);
+		width: 230px;
+		text-align: center;
+		border-radius: 4px;
+
+	}
+
+	/* ------------- For Select Dish END -------------*/
+</style>
+
+
+<div class="container-fluid bg-light mt-5">
+	<div class="row">
+		<!-- Left side Column Cust Info and Dish-->
+		<div class="col-sm-6">
+			<!--For Customer Input only-->
+			<div class="row">
+				<div class="card" style="margin-top: 10px;margin-left: 10px;">
+					<div class="card-head style-light">
+						<header>
+							<h2>Table - {{table_obj.table_room}} ({{table_obj.table_no}})</h2>
+						</header>
+					</div>
+					<div class="card-body">
+						<form class="form" role="form" action="/CustomerAndDish/new_order/{{table_obj.table_n}}"
+							method="post">
+							{% csrf_token %}
+							<!-- first two rows -->
+							<div class="row">
+								<div class="col-sm-6" style="margin-top: 0px;">
+									<!-- <header>Customer Info</header> -->
+									
+									<div class="form-group floating-label">
+
+										<input type="text" name="Custname" class="form-control"
+											value="{{table_obj.cust_id.name}}" />
+
+										<label for="regular2">Customer Name - (Table Name)</label>
+									</div>
+									<div class="form-group floating-label" style="margin-top: 0px;">
+										<input type="text" name="CustPhone" class="form-control"
+											value="{{table_obj.cust_id.phone}}" />
+										<label for="regular2">Phone Number</label>
+									</div>
+
+								</div>
+								<div class="col-sm-6" style="margin-top: 0px;">
+									<!-- <header>Order Info</header> -->
+									<div class="form-group" style="margin-top: 0px;">
+										<input type="date" class="form-control" id="CustOrderDate1"
+											name="CustOrderDate1">
+										<label for="regular2">Date</label>
+									</div>
+
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="form-group floating-label" style="margin-top: 0px;">
+												<input type="text" name="CustTotalFamilyMember" class="form-control"
+													value="{{table_obj.cust_id.no_of_people}}" />
+												<label for="select2">Total Members</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Address and order status -->
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group floating-label">
+										<textarea class="form-control" rows="3"
+											name="CustAddress">{{table_obj.cust_id.address}}</textarea>
+										<label for="textarea2">Address</label>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group floating-label">
+										<div class="col-md-12" style="margin-top: 0px;">
+											<!-- <hr /> -->
+											<div id='order_status_div' style="display: none;">
+												{{table_obj.cust_id.order_status}}
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<label for="textarea2">Order Status</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<label class="radio-inline radio-styled">
+														<input class="form-check-input" type="radio" name="Orderstate"
+															id="inlineRadio1" value="Waiting" checked="checked">
+														<label class="form-check-label"
+															for="inlineRadio2">Waiting</label>
+													</label>
+												</div>
+
+												<div class="col-sm-6">
+													<label class="radio-inline radio-styled">
+														<input class="form-check-input" type="radio" name="Orderstate"
+															id="inlineRadio2" value="Delivered">
+														<label class="form-check-label"
+															for="inlineRadio2">Delivered</label>
+													</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<label class="radio-inline radio-styled">
+
+														<input class="form-check-input" type="radio" name="Orderstate"
+															id="inlineRadio3" value="Paid">
+														<label class="form-check-label" for="inlineRadio3">Paid</label>
+													</label>
+												</div>
+												<div class="col-sm-6">
+													<label class="radio-inline radio-styled">
+														<input class="form-check-input" type="radio" name="Orderstate"
+															id="inlineRadio4" value="Not Paid">
+														<label class="form-check-label" for="inlineRadio4">Not
+															Paid</label>
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<input type="submit" class="btn btn-primary-bright btn-block"
+								value="Customer Info Update" />
+						</form>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Dish input info bottom       -->
+			<div class="row">
+				<div class="card" style="margin-top: 0px;padding: 10px;">
+					<form class="form" role="form" action="" method="post" style="margin-top: 10px;">
+						{% csrf_token %}
+						<div class="row">
+							<div class="col-sm-5">
+								<select class="selectpicker" data-style="btn-info" data-live-search="true"
+									id="main_dish" name="main_dish">
+									<option disabled selected>Select Dish</option>
+									{% for dish in Dishes %}
+									<option>{{ dish.dish_name }}</option>
+									{% endfor %}
+								</select>
+								<div id='table_name' style="display: none;">{{table_obj.table_n}}</div>
+							</div>
+							<div class="col-sm-1">
+								<input type="text" class="form-control" name="main_cost" placeholder="dish cost"
+									id="main_cost" />
+
+							</div>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="main_quantity" name="main_quantity"
+									placeholder="Quantity"
+									style="border: 2px solid #4BB543;color: white;text-align: center;background-color: #4BB543;border-radius: 4px; " />
+							</div>
+
+							<div class="col-sm-2">
+								<input type="text" name="main_rowPrice" placeholder="row total" id="main_rowPrice"
+									class="form-control" />
+							</div>
+							<div class="col-sm-2">
+								<input onclick="DishEntry(this.form)" type="button" class="btn btn-success btn-block"
+									id="addrow" value="Add" style="margin-bottom: 0px; text-align: center;" />
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!--  Right Side For Dish Info Disply Start HERE-->
+		<div class="col-sm-6">
+			<div class="card" style="margin-top: 10px;">
+				<!-- <div class="card-head style-light">
+					<header>Dish / Order</header>
+				</div> -->
+				<div class="card-body">
+					<table class="table order-list" id="myTable" style="width: 100%">
+						<thead>
+							<tr>
+								<td style="width: 30%;font-size: 14px;">Dish</td>
+								<td style="width: 10%;font-size: 14px;">Cost</td>
+								<td style="width: 15%;font-size: 14px;">Quantity</td>
+								<td style="width: 5%;font-size: 14px;">add</td>
+								<td style="width: 5%;font-size: 14px;">sub</td>
+								<td style="width: 15%;font-size: 14px;">SubTotal</td>
+								<td style="width: 15%;font-size: 14px;">Delete</td>
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in order_dises %}
+							<tr>
+								<td>
+									<div id="display_name_{{i.dish_id}}<">{{i.dish_id}}</div>
+								</td>
+								<td>
+									<div id="display_dishprice_{{i.dish_id.dish_name|cut:' '}}">{{i.dish_price}}</div>
+								</td>
+								<td>
+									<div id="display_quantity_{{i.dish_id.dish_name|cut:' '}}">{{i.quantity}}</div>
+								</td>
+								<td><button id="add_quantity.{{i.dish_id.dish_name}}"
+										class="btn btn-sm btn-primary">+</button></td>
+								<td><button id="remove_quantity.{{i.dish_id.dish_name}}"
+										class="btn btn-sm btn-primary">-</button></td>
+								<td>
+									<div id="display_dishrowprice_{{i.dish_id.dish_name|cut:' '}}">{{i.dish_row_total}}
+									</div>
+								</td>
+								<td><input type="button" id="delete_dish.{{i.dish_id.dish_name}}"
+										class="deleteRow ibtnDel btn btn-md btn-danger" value="Delete"
+										style="font-size: 12px;"></td>
+							</tr>
+							{% endfor %}
+						</tbody>
+						<!-- <tfoot> -->
+
+						<!-- </tfoot> -->
+					</table>
+
+					<div class="col-sm-6" style="background-color: rgb(255, 255, 255)">
+						<div class="card" style="margin-top: 10px;">
+							<button class="btn btn-lg btn-block"
+								style="font-size: 14px; color: rgb(255, 255, 255);background-color: rgb(206, 0, 0)"><a
+									href="/CustomerAndDish/print/{{table_obj.cust_id.cust_id}}">Get Bill / Pay
+									Bill</a></button>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<h4 style="text-align: center;margin-top: 20px;">Total</h4>
+					</div>
+					<div class="col-sm-2">
+						<h4 type="text" class="form-control" name="main_total" id="grandtotal">
+							{{table_obj.cust_id.order_total}}</h4>
+					</div>
+					<div class="col-sm-3" style="background-color: rgb(255, 255, 255)">
+						<div class="card" style="margin-top: 10px;">
+							<input type="button" class="btn btn-success btn-block" id="updateDishQuantity"
+								value="Update" style="margin-bottom: 0px; text-align: center;display: none;" />
+						</div>
+					</div>
+
+				</div><!-- Dish Order BODY END HERE-->
+				<div id="ChangeWaring" class="alert alert-warning" style="display: none;" role="alert">
+					<strong>Dish Quantity Changed ! </strong>Press On Toggled Update to Save
+				</div>
+				<div id="UpdateSuccess" class="alert alert-success" style="display: none;" role="alert">
+					<strong>Dish Quantity Updated Successfully ! </strong>
+				</div>
+				<div id="DeletedSuccessful" class="alert alert-success" style="display: none;" role="alert">
+					<strong>Dish Deleted Successfully ! </strong>
+				</div>
+				<div id="DishAddAlert" class="alert alert-success" style="display: none;" role="alert">
+					<strong>New Dish Added ! </strong>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}
