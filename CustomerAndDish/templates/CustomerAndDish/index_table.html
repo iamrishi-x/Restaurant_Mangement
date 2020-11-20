@@ -126,9 +126,7 @@
                                 {% with ''|center:i.room_tables as range %}
                                 {% for j in range %}
                                 <form action="#" id="f{{ i.room_n }}.{{ forloop.counter }}">
-                                    <button class="btn btn-light px-1" data-toggle="modal" data-target="#newCustModal"
-                                        data-table_id="{{ i.room_n }}.{{ forloop.counter }}"
-                                        id="b{{ i.room_n }}.{{ forloop.counter }}">
+                                    <button class="btn btn-light px-1" data-toggle="modal" data-target="#newCustModal" data-table_id="{{ i.room_n }}.{{ forloop.counter }}" id="b{{ i.room_n }}.{{ forloop.counter }}"> <!-- type="button" for quick modal-->
                                         <div class="card shadow mt-2 mx-2"
                                             id="color{{ i.room_n }}.{{ forloop.counter }}"
                                             style="width: 12rem; height: 14rem;">
@@ -289,14 +287,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
+       
         console.log('SideBar Clicked')
-        // $('#sideBarButton').click();
-        // $('#SideBarClick').click();
-        // $("#dish_id").select2();
         $("#T1").trigger('click');
+        // $("#broom1.2").trigger('click');
+        $('#newCustModal').on('show.bs.modal', function (event) {      
+            console.log('------------------table click------------------');
 
-        $('#newCustModal').on('show.bs.modal', function (event) {
-            console.log('tablel click');
             Date.prototype.toDateInputValue = (function () {
                 var local = new Date(this);
                 local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
@@ -304,6 +301,7 @@
             });
 
             var button = $(event.relatedTarget);
+            
             var tableNo = button.data('table_id');
 
             var modal = $(this);

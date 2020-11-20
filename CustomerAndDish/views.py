@@ -120,8 +120,14 @@ def AddDish(request,table):
             cust_dish_obj.quantity = quantity
             cust_dish_obj.dish_row_total = int(quantity)*int(dish_price)
         elif request.POST['oper'] == 'AddData':
-            cust_dish_obj = Customer_Dish(cust_id=cust_id, dish_id=dish_id, dish_price=dish_price, quantity=quantity,dish_row_total=(int(dish_price) * int(quantity)))
-        cust_dish_obj.save()
+            try:
+                cust_dish_obj = Customer_Dish.objects.get(cust_id=cust_id, dish_id=dish_id)
+                cust_dish_obj.quantity = int(cust_dish_obj.quantity) + int(quantity)
+                cust_dish_obj.dish_row_total = int(cust_dish_obj.quantity) * int(dish_price)
+                cust_dish_obj.save()
+            except:
+                cust_dish_obj = Customer_Dish(cust_id=cust_id, dish_id=dish_id, dish_price=dish_price, quantity=quantity,dish_row_total=(int(dish_price) * int(quantity)))
+                cust_dish_obj.save()
         dishes_object = Customer_Dish.objects.filter(cust_id=cust_id)
         print('*' * 40)
         print(dishes_object)
