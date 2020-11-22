@@ -24,6 +24,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexMain, name="RestManagementIndex"),
+    path('about', views.IndexAbout, name="RestManagementAbout"),
     path('CustomerAndDish/', include('CustomerAndDish.urls')),
     path('users/login/', auth_views.LoginView.as_view(template_name="login.html"), name="login"),
     path('users/logout/', auth_views.LogoutView.as_view(), {'next_page': '/'}, name='logout'),

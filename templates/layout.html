@@ -64,6 +64,7 @@
 					</li>
 				</ul>
 			</div>
+			
 				<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="headerbar-right">
 				<ul class="header-nav header-nav-profile">
@@ -79,6 +80,11 @@
 							<li class="divider"></li>
 							<li><a href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off text-danger"></i>
 									Logout</a></li>
+							<li>
+								<a href="{% url 'RestManagementAbout' %}">
+									<span class="text-medium text-light text-danger">About </span><span class="text-medium text-light text-primary">Developer</span>
+								</a>
+							</li>
 						</ul>
 						<!--end .dropdown-menu -->
 					</li>
@@ -86,6 +92,7 @@
 				</ul>
 				<!--end .header-nav-profile -->
 			</div>
+			
 			<!--end #header-navbar-collapse -->
 		</div>
 	</header>
