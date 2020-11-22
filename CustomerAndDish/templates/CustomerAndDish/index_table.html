@@ -3,7 +3,7 @@
 {% block title %} Index Table {% endblock %}
 
 {% block body %}
-
+{% load static %}
 <style>
     tables {
         display: grid;
@@ -284,7 +284,10 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<script src="{% static 'js/libs/jquery/jquery.min.js' %}"></script>
+<!-- <script src="{% static 'js/core/jquery.cookie.js' %}"></script>
+<script src="{% static 'js/libs/jquery/jquery-migrate-1.2.1.min.js' %}"></script> -->
 <script>
     $(document).ready(function () {
        
