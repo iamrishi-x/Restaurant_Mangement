@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block title %} About {% endblock %}
+
+{% block body %}
+<!-- <h1> Developer : Rushi Bagul </h1> -->
+
+{% load static %}
+<!-- id="hero"  -->
+<section id="hero" class="d-flex align-items-center" style="background-color: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 justify-content-center">
+                <h1>Rishi Bagul</h1>
+                <br>
+                <h2>I am Computer Engineer.</h2>
+                <div><a href="#about" class="btn-get-started scrollto">Contact me</a></div>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 hero-img">
+
+                <img src="{% static 'img/hero-img.png' %}" class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
+
+</section><!-- End Hero -->
+
+{% endblock %}

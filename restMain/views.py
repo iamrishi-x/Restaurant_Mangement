@@ -8,4 +8,4 @@ def IndexMain(request):
 
 
 def IndexAbout(request):
-    return render(request,'index.html')
+    return render(request,'About_developer.html')
