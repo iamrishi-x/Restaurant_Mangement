@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.Table_View,name="tableView"),
     path('table_layout/', views.Table_Layout,name="tableLayout"),
     path('TableInfo_DataInput/', views.TableInfo_DataInput,name="TableInfo_DataInput"),
+    path('TableInfo_DataDelete/', views.TableInfo_DataDelete,name="TableInfo_DataDelete"),
 
     #For Orders
     path('all_order/', views.All_Order,name="allOrder"),

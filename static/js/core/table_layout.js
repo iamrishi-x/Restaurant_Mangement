@@ -2,13 +2,13 @@ $(document).ready(function(){
 
     $("#T1").trigger('click');
     $('#sideBarButton').click();
-
 });
 
 function roomTableEntry(frm) {
 
     console.log("on click on placeorder on modal");
-    const formData = new FormData(frm); 
+    const formData = new FormData(frm);
+    $("#SubmitLayout").css("display", "block");
     let flag = 1;
     let data = ["rishi"];
     //   let i = 0;

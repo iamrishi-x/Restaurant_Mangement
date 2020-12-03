@@ -11,10 +11,23 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 justify-content-center">
-                <h1>Rishi Bagul</h1>
-                <br>
-                <h2>I am Computer Engineer.</h2>
-                <div><a href="#about" class="btn-get-started scrollto">Contact me</a></div>
+                <h style="color: rgb(172, 172, 172);">Developer</h>
+                <h1>Rishi bagul</h1>
+                
+                <div class="text_ani">
+                    <p>I am </p>
+                    <p>
+                        <span class="word wisteria">Data Analyst.</span>
+                        <span class="word belize">Data Engineer.</span>
+                        <span class="word pomegranate">Python Developer.</span>
+                        <span class="word green">Web Developer.</span>
+                        <span class="word midnight">and Handsome :)</span>
+                    </p>
+                </div>
+
+                
+                <!-- <h2>I am Computer Engineer.</h2> -->
+                <div><a href="#about" class="btn-get-started">Contact me</a></div>
             </div>
             <div class="col-lg-6 order-1 order-lg-2 hero-img">
 
@@ -24,5 +37,64 @@
     </div>
 
 </section><!-- End Hero -->
+<script>
+    var words = document.getElementsByClassName('word');
+    var wordArray = [];
+    var currentWord = 0;
 
+    words[currentWord].style.opacity = 1;
+    for (var i = 0; i < words.length; i++) {
+        splitLetters(words[i]);
+    }
+
+    function changeWord() {
+        var cw = wordArray[currentWord];
+        var nw = currentWord == words.length - 1 ? wordArray[0] : wordArray[currentWord + 1];
+        for (var i = 0; i < cw.length; i++) {
+            animateLetterOut(cw, i);
+        }
+
+        for (var i = 0; i < nw.length; i++) {
+            nw[i].className = 'letter behind';
+            nw[0].parentElement.style.opacity = 1;
+            animateLetterIn(nw, i);
+        }
+
+        currentWord = (currentWord == wordArray.length - 1) ? 0 : currentWord + 1;
+    }
+
+    function animateLetterOut(cw, i) {
+        setTimeout(function () {
+            cw[i].className = 'letter out';
+        }, i * 80);
+    }
+
+    function animateLetterIn(nw, i) {
+        setTimeout(function () {
+            nw[i].className = 'letter in';
+        }, 340 + (i * 80));
+    }
+
+    function splitLetters(word) {
+        var content = word.innerHTML;
+        word.innerHTML = '';
+        var letters = [];
+        for (var i = 0; i < content.length; i++) {
+            var letter = document.createElement('span');
+            letter.className = 'letter';
+            letter.innerHTML = content.charAt(i);
+            word.appendChild(letter);
+            letters.push(letter);
+        }
+
+        wordArray.push(letters);
+    }
+
+    changeWord();
+    setInterval(changeWord, 4000);
+
+
+
+
+</script>
 {% endblock %}

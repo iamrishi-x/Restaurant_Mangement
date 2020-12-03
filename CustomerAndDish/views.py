@@ -308,7 +308,31 @@ def TableInfo_DataInput(request):
                 table_no=j,
                 table_n=table_n
             )
-    return HttpResponse('submited')
+    table_info = TableInfo.objects.filter(is_close=1)
+    table_info_left = TableInfo.objects.all()
+    return render(request, 'CustomerAndDish/index_table.html',{'all_roomTables': all_roomTables, 'table_info': table_info, 'table_info_left': table_info_left},messages.success(request, 'Table Layout Updated','alert-success'))
+
+def TableInfo_DataDelete(request):
+    objs = TableInfo.objects.all()
+    tables_captured = False
+    for obj in objs:
+        print(f'cust - {obj.cust_id} | room - {obj.table_n} | status - {obj.is_close}')
+        if int(obj.is_close) == 1:
+            tables_captured = True
+            break
+    try :
+        if tables_captured == False:
+            TableInfo.objects.all().delete()
+            RoomTable.objects.all().delete()
+        else:
+            all_roomTables = RoomTable.objects.all()
+            return render(request,'CustomerAndDish/layout_table.html',{'all_roomTables':all_roomTables},messages.success(request, 'Cannot reset table layout first remove or clear all customer from tables.', 'alert-danger'))
+    except:
+        pass
+    all_roomTables = RoomTable.objects.all()
+    return render(request,'CustomerAndDish/layout_table.html',{'all_roomTables':all_roomTables},messages.success(request, 'Tables Layout Deleted', 'alert-success'))
+
+
 
 @login_required
 def order_screen_redirect(request, table):

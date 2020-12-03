@@ -220,7 +220,8 @@
   font-size: 42px;
   font-weight: 700;
   line-height: 56px;
-  color: #0f394c;
+  margin-left: -2px;
+  color: #8b8b8b;
   text-transform: uppercase;
 }
 
@@ -243,6 +244,7 @@
   color: #fff;
   background: #49b5e7;
   text-transform: uppercase;
+  margin-top: 90px;
 }
 
 #hero .btn-get-started:hover {
@@ -276,3 +278,70 @@
 /*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
+
+
+#hero .text_ani {
+  position: absolute;
+  width: 450px;
+  /* left: 240px; */
+  /* margin-left: -225px; */
+  height: 40px;
+  top: 30%;
+  margin-top: 10px;
+  font-size: 22px;
+  /* margin-bottom: 20px; */
+}
+
+p {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+}
+
+.word {
+  position: absolute;
+  width: 220px;
+  opacity: 0;
+}
+
+.letter {
+  display: inline-block;
+  position: relative;
+  float: left;
+  transform: translateZ(25px);
+  transform-origin: 50% 50% 25px;
+}
+
+.letter.out {
+  transform: rotateX(90deg);
+  transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.letter.behind {
+  transform: rotateX(-90deg);
+}
+
+.letter.in {
+  transform: rotateX(0deg);
+  transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.wisteria {
+  color: #aa44d6;
+}
+
+.belize {
+  color: #2b9ce7;
+}
+
+.pomegranate {
+  color: #c0392b;
+}
+
+.green {
+  color: #16a085;
+}
+
+.midnight {
+  color: #ff00c8;
+}
